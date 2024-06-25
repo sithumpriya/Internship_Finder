@@ -1,0 +1,246 @@
+{% extends 'basic.html' %}
+{% block title %} Job Details {% endblock %}
+
+{% block css %}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.top-header{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: #e0e5e5;
+    border-bottom: 2px solid #9f9a9a;
+}
+
+.top-header h2{
+    color: rgb(70, 70, 90);
+    font-size:30px;
+    font-weight: 700;
+    padding: 20px 0;
+}
+
+.top-header h4{
+    color: #585353;
+    font-size:22px;
+    font-weight: 600;
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+.top-header .topic-details{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.top-header .topic-details p{
+    color: #7e7a7a;
+    font-size: 15px;
+    padding: 4px 8px;
+}
+
+.topic-details p.work{
+    background: #119999;
+    color: #fff;
+    border-radius: 3px;
+}
+
+.topic-details p.date{
+    color: #128ed5;
+    font-weight: 600;
+}
+
+.include{
+    display: flex;
+    padding:3rem 14.5%;
+    width: 100%;
+    background: #f8f3f3;
+    gap: 40px;
+}
+
+.include .left-side{
+    flex: 50rem;
+    text-align: justify;
+}
+
+.left-side p.epxp_info{
+    color: #119944;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #d0c8c8;
+}
+
+.left-side h3.job-title{
+    color: #222222;
+    font-size: 22px;
+    padding: 20px 0 30px;
+}
+
+.left-side p.job-desc{
+    color:#222222;
+    font-size: 15px;
+    padding-bottom: 30px;
+}
+
+.include .right-side{
+    flex: 8rem;
+    text-align: center;
+}
+
+.personal-profile h6.personal-profile-title{
+    font-size: 18px;
+    color: #222222;
+    padding-bottom: 20px;
+}
+
+.personal-profile .personal-profile-info {
+    font-size: 15px;
+    color: #222222;
+    padding-left: 40px;
+}
+
+.personal-profile .personal-profile-info li{
+    margin-bottom: 5px;
+}
+
+.job-profile h6.job-profile-title{
+    font-size: 18px;
+    color: #222222;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.job-profile .personal-profile-info {
+    font-size: 15px;
+    color: #222222;
+    padding-left: 40px;
+}
+
+.job-profile .personal-profile-info li{
+    margin-bottom: 5px;
+}
+
+.include .left-side h1{
+    color: #222222;
+    padding: 20px 0;
+    font-size: 22px;
+}
+
+.location-info{
+    color: #007799;
+    font-size: 15px;
+}
+
+.include .right-side p.work{
+    background: #0cd043;
+    color: #fff;
+    border-radius: 3px;
+    padding: 7px 0;
+    margin-bottom: 40px;
+}
+
+.include .right-side a{
+    background-color: #128ed5;
+    color: #fff;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    text-transform: uppercase;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.include .right-side a:hover{
+    color: #128ed5;
+    background: transparent;
+    border: 2px solid #128ed5;
+}
+
+h4:hover{
+    color:blue;
+    cursor:pointer;
+}
+
+{% endblock %}
+
+{% block body %}
+
+   <div class="top-header">
+        <h2>{{ job.title }}</h2>
+       <h4 data-bs-toggle="modal" data-bs-target="#companyModal">{{ job.company.company_name }}</h4>
+
+        <div class="topic-details">
+            <p class="work">{% if job.job_type == 'full_time' %}
+        Full Time
+    {% elif job.job_type == 'part_time' %}
+        Part Time
+    {% else %}
+        {{ job.job_type }}
+    {% endif %}</p>
+            <p class="location"><i class='bx bx-location-plus' ></i>{{ job.location }} |</p>
+            <p class="date"><i class='bx bx-calendar' id="remaining-time"></i></p>
+        </div>
+    </div>
+
+    <div class="include">
+        <div class="left-side">
+            <p class="epxp_info">{{ job.skill }}</p>
+
+            <h3 class="job-title">Job Description</h3>
+
+            <div class="personal-profile" id="job-description">
+                {{ job.description }}
+            </div>
+
+            <h1>Please apply for the job using the following email address</h1>
+            <p class="location-info">{{ job.email }}</p>
+        </div>
+
+    </div>
+
+ <!-- Company Modal -->
+    <div class="modal fade" id="companyModal" tabindex="-1" aria-labelledby="companyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-light text-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ job.company.company_name }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 col md-6">
+                        <p><strong>Address:</strong> {{ job.company.company_address }}</p>
+                        <p><strong>Phone:</strong> {{ job.company.contact_number }}</p>
+                        <p><strong>Email:</strong> {{ job.company.email }}</p>
+                        <p><strong>Bio:</strong></br> {{ job.company.company_bio }}</p>
+                        <p><strong>Website:</strong> <a href="{{ job.company.website }}" target="_blank">{{ job.company.website }}</a></p>
+                    </div>
+                    <div class="mb-3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    var dateString = '{{ job.time_date.isoformat }}';
+    var jobTime = new Date(dateString);
+    var now = new Date();
+
+    var timeDiff = jobTime - now;
+
+    var days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+    var remainingTime = days + " days, " + hours + " hours LEFT ";
+    document.getElementById("remaining-time").innerText = remainingTime;
+</script>
+
+{% endblock %}

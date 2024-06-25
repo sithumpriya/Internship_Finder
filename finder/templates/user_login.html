@@ -1,0 +1,189 @@
+{% extends 'basic.html' %}
+{% block title %} Home {% endblock %}
+{% block home %} active {% endblock %}
+
+{% block css %}
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.content{
+    padding:40px 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(to left, #0a0700, rgb(144, 19, 228));
+}
+
+.content form{
+    background: #222222;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #222222;
+    padding: 25px 25px 0;
+}
+
+.content form h2{
+    color: #ffff;
+    font-size: 28px;
+    padding-bottom: 30px;
+}
+
+form .inputBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: justify;
+    margin-bottom: 20px;
+}
+
+form .inputBox label{
+    font-size: 17px;
+    color: #ffff;
+    padding-bottom: 5px;
+}
+
+form .inputBox input{
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+form .others{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+form .others a{
+    color: #ffff;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+form .others a:hover{
+    text-decoration: underline;
+}
+
+form .btn{
+    background: #0a07b1;
+    padding: 10px 35px;
+    font-size: 18px;
+    color: #ffff;
+    border: none;
+    border-radius: 4px;
+    margin-top: 10px;
+    margin-bottom:10px;
+    cursor: pointer;
+}
+
+form .btn:hover{
+    background: #0a0890;
+    color:#ffff;
+}
+
+.user_login{
+    width: 350px;
+    height: auto;
+}
+
+.user_login a{
+    color:#ffff;
+    text-decoration:none;
+}
+
+.user_login a:hover{
+    text-decoration:underline;
+}
+
+/*==== signup ====*/
+.user_signup{
+    width:350px;
+    height: auto;
+}
+
+form .box{
+    display: flex;
+    gap: 5px;
+}
+
+form .link p{
+    color: #ffff;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+}
+
+form .link p a{
+    text-decoration: none;
+    color: #dcd1d1;
+}
+
+form .link p a:hover{
+    text-decoration: underline;
+}
+
+@media(max-width:1020px)
+{
+    form .box{
+        width: 100%;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    form .box input{
+        width: 100%;
+    }
+
+    .content{
+        height: auto;
+        padding: 30px 0;
+    }
+
+    .user_signup{
+        width: 350px;
+        height: auto;
+    }
+}
+
+@media(max-width:370px)
+{
+    .user_signup{
+        width: auto;
+    }
+}
+
+{% endblock %}
+
+{% block body %}
+
+<div class="content">
+    <form class="user_login" method="POST">
+        {% csrf_token %}
+        <h2>User Login</h2>
+        <div class="inputBox">
+            <label for="">Username</label>
+            <input type="text" name="username" placeholder="Enter Username" required>
+        </div>
+        <div class="inputBox">
+            <label for="">Password</label>
+            <input type="password" name="password" placeholder="Enter Password" required>
+        </div>
+        <div class="button">
+            <button type="submit" class="btn">Login</button>
+        </div>
+
+        <p><a href="/internship-finder/user_register/">Create a new account</a></p>
+    </form>
+</div>
+
+
+
+{% endblock %}

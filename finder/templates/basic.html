@@ -1,0 +1,95 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+
+        {% block css %}
+            
+        {% endblock %}
+    </style>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);">
+    <div class="container">
+        <a class="navbar-brand" href="#"><i class="fas fa-search fa-sm" style="color: #FFD43B; margin-right:10px"></i>Internship Finder</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link{% block home %}{% endblock %}" aria-current="page" href="/internship-finder/">Home</a>
+                </li>
+                    <li class="nav-item">
+                        <a class="nav-link{% block job_listing %} {% endblock %}" href="{% url 'user_job_list' %}">Job Listing</a>
+                    </li>
+                {% if not user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/internship-finder/user_login/">User Login</a>
+                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% block company_login %} {% endblock %}" href="/internship-finder/company_login/">Company Login</a>
+                    </li>
+
+                {% else %}
+                     {% if user.is_authenticated %}
+                        {% if user_type == 'student' %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="delete= {{item.id}}"><i class="fas fa-user-circle" style="color: white; font-size: 32px; margin-left: 10px;"></i></a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <center> <i class="fas fa-user-circle" style="color: black; font-size: 32px; margin-left: 10px;"></i> </center>
+                                <p class="h6" style="text-align: center;">{{ profile.username  }}</p>                                
+                                <li><a class="dropdown-item" href="{% url 'student-profile' stu_id=profile.id %}">Profile</a></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
+                            </ul>
+                            </li>
+
+                        {% endif %}
+                        {% if user_type == 'company' %}
+                            <li class="nav-item">
+                                <a class="nav-link {% block add_job %} {% endblock %}" href="{% url 'add_job' %}">Post a Job</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarComDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-user-circle" style="color: white; font-size: 32px; margin-left: 10px;"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-end" aria-labelledby="navbarComDropdown">
+                                <center> <i class="fas fa-user-circle" style="color: black; font-size: 32px; margin-left: 10px;"></i> </center>
+                                <p class="h6" style="text-align: center;">{{ profile.company_name }}</p>
+                                <li><a class="dropdown-item" href="{% url 'my_joblist' comp_id=profile.id %}">My Job List</a></li>
+                                <li><a class="dropdown-item" href="{% url 'company-profile' comp_id=profile.id %}">Profile</a></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
+                            </ul>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+    {% endfor %}
+{% endif %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+ {% block body %}
+  {% endblock %}
+</body>

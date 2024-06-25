@@ -1,0 +1,78 @@
+{% extends 'basic.html' %}
+{% block title %} Job Listing {% endblock %}
+{% block job_listing %} active {% endblock %}
+{% block css %}
+
+    * {
+        -webkit-transition: 0.2s;
+        transition: 0.2s;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    .list {
+        background-color: #e0e5ee;
+        padding: 1px 20px;
+        border-radius: 4px;
+        margin: 15px 15px;
+        width: 500px;
+        height: 200px;
+        cursor: pointer;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1), 0 2.5px 5px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    .list:hover {
+        background-color: #f8f8f8;
+        transform: scale(1.05); 
+    }
+
+    h3 {
+        color: rgb(70, 70, 90);
+    }
+
+    h5 {
+        color: rgb(90, 90, 110);
+    }
+
+    .expire_date {
+        font-weight: 400;
+    }
+
+    .responsive {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0
+    }
+
+{% endblock %}
+
+{% block body %}
+
+<div class="responsive">
+    {% if joblist %}
+    
+        {% for Job in joblist %}
+            <div class="list">
+                <a style="text-decoration: none;" href="{% url 'job_details' job_id=Job.id %}">
+                    <h3>{{Job.title}} - {{Job.job_type}}</h3><hr>
+                    <h5>Company - {{Job.company}}</h5>
+                    <h5>Category - {{Job.category}}</h5>
+                    <h5>located at {{Job.location}}</h5>
+                    <h5 class="expire_date">Expires on {{Job.time_date}}</h5>
+                </a>
+            </div>        
+        {% endfor %}
+    
+    {% else %}
+        <h1 style="color: #585858; margin-top: 200px;">There is no content available for display at this time.</h1>
+    {% endif %}
+
+</div>
+
+
+{% endblock %}

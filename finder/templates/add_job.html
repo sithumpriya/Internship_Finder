@@ -1,0 +1,122 @@
+{% extends 'basic.html' %}
+{% block title %} Add Job {% endblock %}
+{% block add_job %} active {% endblock %}
+
+{% block css %}
+
+<style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #ebe9f3;
+      margin: 0;
+      padding: 0;
+    }
+
+    .form-container {
+      max-width: 500px;
+      margin: 50px auto;
+      background-color: #1e1d1f;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 10px;
+      color: #d1d6d8;
+      font-weight: bold;
+      display: flex;
+      flex-direction: row;
+    }
+
+    input,
+    textarea,
+    select {
+      margin-bottom: 10px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      border-radius: 15px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+
+
+{% endblock %}
+
+
+{% block body %}
+
+<div class="form-container">
+    <h2 style="color: white;">Add Job</h2>
+
+    <form method="POST">
+      {% csrf_token %}
+      <label for="title">Job Title:</label>
+      <input type="text" id="title" name="title" required>
+  
+      <label for="description">Job Description:</label>
+      <textarea id="description" name="description" rows="15" required></textarea>
+  
+      <label for="email">Contact Email:</label>
+      <input type="email" id="email" name="email" required>
+  
+      <label for="time_date">Date and Time:</label>
+      <input type="datetime-local" id="time_date" name="time_date" required>
+
+      <label for="category">Category:</label>
+      <select id="category" name="category" class="form-select form-select-lg" required>
+        <option value="software">Software Development</option>
+        <option value="network">Networking</option>
+        <option value="web_design">Web Design</option>
+        <option value="data_science">Data Science</option>
+        <option value="digital_marketing">Digital Marketing</option>
+        <option value="graphic_design">Graphic Design</option>
+        <option value="hr">HR</option>
+
+      </select>
+  
+      <label for="skill">Required Skill:</label>
+      <textarea id="skill" name="skill" required></textarea>
+
+  
+      <label for="job_type">Job Type:</label>
+      <select id="job_type" name="job_type" class="form-select form-select-lg" required>
+        <option value="full_time">Full Time</option>
+        <option value="part_time">Part Time</option>
+        <!-- Add other job types as needed -->
+      </select>
+  
+      <label for="location">Job Location:</label>
+      <input type="text" id="location" name="location" required>
+  
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+
+{% endblock %}
+

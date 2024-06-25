@@ -1,0 +1,206 @@
+{% extends 'basic.html' %}
+{% block title %} Profile {% endblock %}
+
+{% block css %}
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.content{
+    padding:40px 0;
+    width: 100%;
+    height: 110vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(to left, #0a07b1, rgb(144, 19, 228));
+}
+
+.content form{
+    background: #222222;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #222222;
+    padding: 25px 25px 0;
+}
+
+.content form h2{
+    color: #ffff;
+    font-size: 28px;
+    padding-bottom: 30px;
+}
+
+form .inputBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: justify;
+    margin-bottom: 20px;
+}
+
+form .inputBox label{
+    font-size: 17px;
+    color: #ffff;
+    padding-bottom: 5px;
+}
+
+form .inputBox input,
+form .inputBox select{
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+form .others{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+form .others a{
+    color: #ffff;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+form .others a:hover{
+    text-decoration: underline;
+}
+
+form .btn{
+    background: #0a07b1;
+    padding: 10px 35px;
+    font-size: 18px;
+    color: #ffff;
+    border: none;
+    border-radius: 4px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+form .btn:hover{
+    background: #0a0890;
+    color:#ffff;
+}
+
+.user_login{
+    width: 350px;
+    height: 400px;
+}
+
+
+/*==== signup ====*/
+.user_signup{
+    width:350px;
+    height: auto;
+}
+
+form .box{
+    display: flex;
+    gap: 5px;
+}
+
+form .link p{
+    color: #ffff;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+}
+
+form .link p a{
+    text-decoration: none;
+    color: #dcd1d1;
+}
+
+form .link p a:hover{
+    text-decoration: underline;
+}
+
+form span{
+    margin-bottom:-10px;
+    color:red;
+}
+
+@media(max-width:1020px)
+{
+    form .box{
+        width: 100%;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    form .box input{
+        width: 100%;
+    }
+
+    .content{
+        height: auto;
+        padding: 30px 0;
+    }
+
+    .user_signup{
+        width: 350px;
+        height: auto;
+    }
+}
+
+@media(max-width:370px)
+{
+    .user_signup{
+        width: auto;
+    }
+}
+
+{% endblock %}
+
+{% block body %}
+
+<div class="content">
+    <form class="user_signup" method="POST">
+        {% csrf_token %}
+        <h2>Profile</h2>
+        <div class="inputBox">
+            <label for="">Username</label>
+            <input type="text" name="username"  placeholder="Enter Username" value="{{ student.username }}" required>
+        </div>
+        <div class="inputBox">
+            <label for="">Email</label>
+            <input type="email" name="email"  placeholder="Enter Email" value="{{ student.user.email }}" required>
+        </div>
+        <div class="inputBox">
+            <label for="">Password</label>
+            <input type="password" name="password1" placeholder="Enter Password" required>
+        </div>
+        <div class="inputBox">
+            <label for="">Confirm Password</label>
+            <input type="password" name="password2" placeholder="Enter Re-password" required>
+        </div>
+        <div class="inputBox">
+            <label for="">Category</label>
+            <select id="category" name="category" class="" required>
+                <option value="software" {% if student.category == "software" %} selected {% endif %}>Software Development</option>
+                <option value="network" {% if student.category == "network" %} selected {% endif %}>Networking</option>
+                <option value="web_design" {% if student.category == "web_design" %} selected {% endif %}>Web Design</option>
+                <option value="data_science" {% if student.category == "data_science" %} selected {% endif %}>Data Science</option>
+                <option value="digital_marketing" {% if student.category == "digital_marketing" %} selected {% endif %}>Digital Marketing</option>
+                <option value="graphic_design" {% if student.category == "graphic_design" %} selected {% endif %}>Graphic Design</option>
+                <option value="hr" {% if student.category == "hr" %} selected {% endif %}>HR</option>
+            </select>
+        </div>
+        
+        <div class="button">
+            <button type="submit" class="btn">Update</button>
+        </div>
+
+
+    </form>
+</div>
+
+
+
+{% endblock %}
